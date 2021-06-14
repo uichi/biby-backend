@@ -1,0 +1,5 @@
+biby_uwsgi.ini
+db.sqlite3
+/env
+manage.py
+uwsgi_params
