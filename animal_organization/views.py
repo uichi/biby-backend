@@ -1,7 +1,8 @@
-from django.shortcuts import render
 from django.views.generic import ListView, TemplateView
 from .models import Hospital
-from django.db.models import Q, query
+from django.db.models import Q
+from functools import reduce
+import operator
 
 
 class Top(ListView):
@@ -13,8 +14,11 @@ class Top(ListView):
         query = self.request.GET.get('query')
 
         if query:
+            # object_list = Hospital.objects.filter(Q(name__contains=keyword) | Q(address__contains=keyword))
             object_list = Hospital.objects.filter(
-                Q(name__contains=query) | Q(address_name__contains=query))
+                reduce(operator.or_, (Q(name__contains=keyword) for keyword in query.split())) |
+                reduce(operator.or_, (Q(address__contains=keyword) for keyword in query.split()))
+                )
         else:
             object_list = Hospital.objects.all()
         return object_list
