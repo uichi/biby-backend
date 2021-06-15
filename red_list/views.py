@@ -14,7 +14,7 @@ class Top(ListView):
     def get_queryset(self):
         query = self.request.GET.get('query')
 
-        if query:
+        if query and query.split() != []:
             category = Category.objects.filter(reduce(operator.or_, (Q(name__contains=keyword) for keyword in query.split())))
             classification = Classification.objects.filter(reduce(operator.or_, (Q(name__contains=keyword) for keyword in query.split())))
             object_list = Animal.objects.filter(

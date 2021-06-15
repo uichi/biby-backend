@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from .models import Hospital
 from django.db.models import Q
 from functools import reduce
@@ -13,7 +13,7 @@ class Top(ListView):
     def get_queryset(self):
         query = self.request.GET.get('query')
 
-        if query:
+        if query and query.split() != []:
             object_list = Hospital.objects.filter(
                 reduce(operator.or_, (Q(name__contains=keyword) for keyword in query.split())) |
                 reduce(operator.or_, (Q(address__contains=keyword) for keyword in query.split()))
