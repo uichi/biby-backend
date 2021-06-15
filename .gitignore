@@ -5,3 +5,5 @@ db.sqlite3
 uwsgi_params
 .python-version
 *.pyc
+/project/production.py
+/static
