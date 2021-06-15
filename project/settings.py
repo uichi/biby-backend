@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-wum*%p-gy*0zamq88b-tqaxd#z#t(ym9@2-bxw^k&hszc+^m(l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['biby.live']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
+    'red_list',
 ]
 
 MIDDLEWARE = [
