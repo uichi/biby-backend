@@ -23,6 +23,7 @@ class AnimalResource(resources.ModelResource):
     import_id_fields = ('id', )
 
 class AnimalAdmin(ImportExportModelAdmin):
+  list_display = ('japanese_name', 'scientific_name','category', 'classification', )
   resource_class = AnimalResource
 
 admin.site.register(Animal, AnimalAdmin)

@@ -1,3 +1,4 @@
+.DS_Store
 biby_uwsgi.ini
 db.sqlite3
 /env
