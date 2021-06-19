@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'import_export',
     'rest_framework',
     'imagekit',
+    'django_cleanup',
     'red_list',
     'animal_organization',
     'pet',

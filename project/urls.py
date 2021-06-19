@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('red_list/', include('red_list.urls')),
     path('', include('animal_organization.urls')),
+    path('api/v1/', include('pet.urls')),
 ]
