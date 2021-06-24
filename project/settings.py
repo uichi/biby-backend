@@ -143,4 +143,4 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-CORS_ALLOWED_ORIGINS = ['localhost:3000']
+CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
