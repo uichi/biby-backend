@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'import_export',
     'rest_framework',
     'djoser',
+    'rest_framework.authtoken',
     'corsheaders',
     'imagekit',
     'django_cleanup',
