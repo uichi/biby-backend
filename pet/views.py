@@ -26,14 +26,14 @@ class PetViewSet(viewsets.ModelViewSet):
         'welcome_day',
         'share_id',
         'is_heaven')
-    permission_classes = (IsSuperUser, )
+    # permission_classes = (IsSuperUser, )
 
 
 class PetOwnerGroupViewSet(viewsets.ModelViewSet):
     queryset = PetOwnerGroup.objects.all()
     serializer_class = PetOwnerGroupSerializer
     filter_fields = ('user', 'pet')
-    permission_classes = (IsSuperUser, )
+    # permission_classes = (IsSuperUser, )
 
 
 class CareCategoryViewSet(viewsets.ModelViewSet):
@@ -46,7 +46,7 @@ class CareCategoryViewSet(viewsets.ModelViewSet):
         'unit',
         'is_daily_routine',
         'pet')
-    permission_classes = (IsSuperUser, )
+    # permission_classes = (IsSuperUser, )
 
 
 class PetCareLogViewSet(viewsets.ModelViewSet):
@@ -59,10 +59,10 @@ class PetCareLogViewSet(viewsets.ModelViewSet):
         'checkbox',
         'care_category',
         'memo')
-    permission_classes = (IsSuperUser, )
+    # permission_classes = (IsSuperUser, )
 
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (IsSuperUser, )
