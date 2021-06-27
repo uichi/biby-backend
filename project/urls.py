@@ -21,6 +21,7 @@ urlpatterns = [
     path('red_list/', include('red_list.urls')),
     path('', include('animal_organization.urls')),
     path('api/v1/', include('pet.urls')),
-    path('api/auth/', include('djoser.urls')),
-    path('api/auth/', include('djoser.urls.authtoken')),
+    path('api/v1/auth/', include('djoser.urls')),
+    path('api/v1/auth/', include('djoser.urls.authtoken')),
+    path('api/v1/', include('user.urls')),
 ]

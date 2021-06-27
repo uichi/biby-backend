@@ -1,5 +1,6 @@
 from rest_framework import viewsets
-from django.contrib.auth.models import User
+from rest_framework.permissions import AllowAny
+from django.contrib.auth import get_user_model
 from rest_framework.permissions import BasePermission
 from .models import CareCategory, Pet, PetCareLog, PetOwnerGroup
 from .serializers import CareCategorySerializer,\
@@ -7,6 +8,10 @@ from .serializers import CareCategorySerializer,\
     PetCareLogSerializer,\
     PetOwnerGroupSerializer,\
     UserSerializer
+from rest_framework.response import Response
+from rest_framework import status
+
+User = get_user_model()
 
 
 class IsSuperUser(BasePermission):

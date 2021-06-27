@@ -6,10 +6,11 @@ from django.db.models import BooleanField, \
     IntegerField, \
     TextField
 from django.db.models import CASCADE, DO_NOTHING, Model
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
+User = get_user_model()
 
 # Pet
 class Pet(Model):

@@ -1,6 +1,8 @@
-from rest_framework.serializers import HyperlinkedModelSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer, CharField
 from .models import CareCategory, Pet, PetCareLog, PetOwnerGroup
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class PetSerializer(HyperlinkedModelSerializer):

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'red_list',
     'animal_organization',
     'pet',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -157,3 +158,5 @@ DJOSER = {
 }
 
 CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+
+AUTH_USER_MODEL = 'user.Account'
