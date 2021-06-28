@@ -8,3 +8,4 @@ uwsgi_params
 *.pyc
 /project/production.py
 /static
+media
