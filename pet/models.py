@@ -9,8 +9,10 @@ from django.db.models import CASCADE, DO_NOTHING, Model
 from django.contrib.auth import get_user_model
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from django.utils.crypto import get_random_string
 
 User = get_user_model()
+
 
 # Pet
 class Pet(Model):
@@ -24,7 +26,8 @@ class Pet(Model):
     gender = IntegerField(choices=GENDER, blank=True, null=True)
     birthday = DateTimeField(blank=True, null=True)
     welcome_day = DateTimeField(blank=True, null=True)
-    share_id = CharField(max_length=128, null=False)
+    # TODO: 読み取り専用にしたい
+    share_id = CharField(unique=True, max_length=128, blank=True, null=False, default=get_random_string(50))
     is_heaven = BooleanField(blank=True, null=False, default=False)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
