@@ -1,33 +1,35 @@
 from django.db.models import BooleanField, \
     CharField, \
+    DateField, \
     DateTimeField, \
     ForeignKey, \
     FloatField, \
     IntegerField, \
-    TextField
+    TextField, \
+    UUIDField
 from django.db.models import CASCADE, DO_NOTHING, Model
 from django.contrib.auth import get_user_model
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
-from django.utils.crypto import get_random_string
+import uuid
 
 User = get_user_model()
 
 
 # Pet
 class Pet(Model):
-    GENDER = ((1, 'オス'), (2, 'メス'))
+    GENDER = (('male', 'オス'), ('female', 'メス'))
     name = CharField(max_length=150, blank=False, null=False)
     image = ProcessedImageField(upload_to='pet_images',
                                 processors=[ResizeToFill(75, 75)],
                                 options={'quality': 60},
                                 blank=True,
                                 null=True)
-    gender = IntegerField(choices=GENDER, blank=True, null=True)
-    birthday = DateTimeField(blank=True, null=True)
-    welcome_day = DateTimeField(blank=True, null=True)
+    gender = CharField(choices=GENDER, max_length=16, blank=True, null=True)
+    birthday = DateField(blank=True, null=True)
+    welcome_day = DateField(blank=True, null=True)
     # TODO: 読み取り専用にしたい
-    share_id = CharField(unique=True, max_length=128, blank=True, null=False, default=get_random_string(50))
+    share_id = UUIDField(default=uuid.uuid4, editable=False)
     is_heaven = BooleanField(blank=True, null=False, default=False)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
@@ -46,12 +48,13 @@ class PetOwnerGroup(Model):
 
 # Care Category
 class CareCategory(Model):
+    INPUT_TYPE = (('text', 'テキスト'), ('integer', '整数'), ('float', '小数点'), ('checkbox', 'チェックボックス'))
     name = CharField(max_length=150, blank=False, null=False)
     icon = IntegerField(blank=True, null=True, default=1)
-    input_type = IntegerField(blank=True, null=True)
+    input_type = CharField(choices=INPUT_TYPE, max_length=16, blank=True, null=True)
     unit = CharField(max_length=10, blank=True, null=True)
     is_daily_routine = BooleanField(blank=True, null=False, default=False)
-    pet = ForeignKey(Pet, on_delete=CASCADE, null=False)
+    user = ForeignKey(User, on_delete=DO_NOTHING, null=False)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 

@@ -10,6 +10,8 @@ from .serializers import CareCategorySerializer,\
     UserSerializer
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.parsers import JSONParser, MultiPartParser
+from django_filters.rest_framework import DjangoFilterBackend
 
 User = get_user_model()
 
@@ -32,6 +34,14 @@ class PetViewSet(viewsets.ModelViewSet):
         'share_id',
         'is_heaven')
     # permission_classes = (IsSuperUser, )
+    parser_classes = (JSONParser, MultiPartParser)
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ('id', 'name')
+
+    def perform_create(self, serializer):
+        pet = serializer.save()
+        pet_owner_group = PetOwnerGroup(user=self.request.user, pet=pet)
+        pet_owner_group.save()
 
 
 class PetOwnerGroupViewSet(viewsets.ModelViewSet):
@@ -50,7 +60,7 @@ class CareCategoryViewSet(viewsets.ModelViewSet):
         'input_type',
         'unit',
         'is_daily_routine',
-        'pet')
+        'user')
     # permission_classes = (IsSuperUser, )
 
 

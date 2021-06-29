@@ -1,4 +1,4 @@
-from rest_framework.serializers import HyperlinkedModelSerializer, CharField
+from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer, CharField
 from .models import CareCategory, Pet, PetCareLog, PetOwnerGroup
 from django.contrib.auth import get_user_model
 
@@ -19,10 +19,12 @@ class PetSerializer(HyperlinkedModelSerializer):
             'is_heaven')
 
 
-class PetOwnerGroupSerializer(HyperlinkedModelSerializer):
+class PetOwnerGroupSerializer(ModelSerializer):
+
     class Meta:
         model = PetOwnerGroup
-        fields = ('user', 'pet')
+        fields = ('pet',)
+        depth = 1
 
 
 class CareCategorySerializer(HyperlinkedModelSerializer):
@@ -34,7 +36,7 @@ class CareCategorySerializer(HyperlinkedModelSerializer):
             'input_type',
             'unit',
             'is_daily_routine',
-            'pet')
+            'user')
 
 
 class PetCareLogSerializer(HyperlinkedModelSerializer):
