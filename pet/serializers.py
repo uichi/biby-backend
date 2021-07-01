@@ -1,11 +1,11 @@
-from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer, CharField
+from rest_framework.serializers import ModelSerializer, CharField, PrimaryKeyRelatedField
 from .models import CareCategory, Pet, PetCareLog, PetOwnerGroup
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
-class PetSerializer(HyperlinkedModelSerializer):
+class PetSerializer(ModelSerializer):
     class Meta:
         model = Pet
         fields = (
@@ -20,17 +20,17 @@ class PetSerializer(HyperlinkedModelSerializer):
 
 
 class PetOwnerGroupSerializer(ModelSerializer):
-
     class Meta:
         model = PetOwnerGroup
         fields = ('pet',)
         depth = 1
 
 
-class CareCategorySerializer(HyperlinkedModelSerializer):
+class CareCategorySerializer(ModelSerializer):
     class Meta:
         model = CareCategory
         fields = (
+            'id',
             'name',
             'icon',
             'input_type',
@@ -39,19 +39,31 @@ class CareCategorySerializer(HyperlinkedModelSerializer):
             'user')
 
 
-class PetCareLogSerializer(HyperlinkedModelSerializer):
+class PetCareLogSerializer(ModelSerializer):
+    care_category_pk = PrimaryKeyRelatedField(
+        queryset=CareCategory.objects.all(), source='care_category', write_only=True
+    )
+    user_pk = PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source='user', write_only=True
+    )
+
     class Meta:
         model = PetCareLog
         fields = (
+            'id',
+            'date_time',
             'integer',
             'float',
             'text',
             'checkbox',
             'care_category',
-            'memo')
+            'care_category_pk',
+            'memo',
+            'user_pk')
+        depth = 1
 
 
-class UserSerializer(HyperlinkedModelSerializer):
+class UserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email')

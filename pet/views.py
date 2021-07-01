@@ -55,6 +55,7 @@ class CareCategoryViewSet(viewsets.ModelViewSet):
     queryset = CareCategory.objects.all()
     serializer_class = CareCategorySerializer
     filter_fields = (
+        'id',
         'name',
         'icon',
         'input_type',
@@ -68,6 +69,7 @@ class PetCareLogViewSet(viewsets.ModelViewSet):
     queryset = PetCareLog.objects.all()
     serializer_class = PetCareLogSerializer
     filter_fields = (
+        'date_time',
         'integer',
         'float',
         'text',
