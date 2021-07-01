@@ -69,10 +69,9 @@ class PetCareLog(Model):
     text = TextField(blank=True, null=True)
     checkbox = BooleanField(blank=True, null=False, default=False)
     care_category = ForeignKey(CareCategory, on_delete=CASCADE, null=False)
-    # TODO: null=Falseにしたい
-    date_time = DateTimeField(blank=False, null=True)
+    date_time = DateTimeField(blank=False, null=False)
     memo = TextField(blank=True, null=True)
-    user = ForeignKey(User, on_delete=CASCADE, null=False)
     pet = ForeignKey(Pet, on_delete=CASCADE, null=False)
+    user = ForeignKey(User, on_delete=CASCADE, null=False)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)

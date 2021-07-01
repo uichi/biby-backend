@@ -24,19 +24,9 @@ class IsSuperUser(BasePermission):
 class PetViewSet(viewsets.ModelViewSet):
     queryset = Pet.objects.all()
     serializer_class = PetSerializer
-    filter_fields = (
-        'id',
-        'name',
-        'image',
-        'gender',
-        'birthday',
-        'welcome_day',
-        'share_id',
-        'is_heaven')
     # permission_classes = (IsSuperUser, )
     parser_classes = (JSONParser, MultiPartParser)
-    filter_backends = [DjangoFilterBackend]
-    filter_fields = ('id', 'name')
+    filter_fields = ('name',)
 
     def perform_create(self, serializer):
         pet = serializer.save()
@@ -75,7 +65,9 @@ class PetCareLogViewSet(viewsets.ModelViewSet):
         'text',
         'checkbox',
         'care_category',
-        'memo')
+        'memo',
+        'pet',
+    )
     # permission_classes = (IsSuperUser, )
 
 

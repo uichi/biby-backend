@@ -12,7 +12,6 @@ class RegisterViewSet(GenericAPIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
-        print(request.data)
         serializer = RegisterUserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

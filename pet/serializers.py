@@ -46,6 +46,9 @@ class PetCareLogSerializer(ModelSerializer):
     user_pk = PrimaryKeyRelatedField(
         queryset=User.objects.all(), source='user', write_only=True
     )
+    pet_pk = PrimaryKeyRelatedField(
+        queryset=Pet.objects.all(), source='pet'
+    )
 
     class Meta:
         model = PetCareLog
@@ -59,7 +62,8 @@ class PetCareLogSerializer(ModelSerializer):
             'care_category',
             'care_category_pk',
             'memo',
-            'user_pk')
+            'user_pk',
+            'pet_pk')
         depth = 1
 
 
