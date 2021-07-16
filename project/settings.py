@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-wum*%p-gy*0zamq88b-tqaxd#z#t(ym9@2-bxw^k&hszc+^m(l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'import_export',
     'rest_framework',
-    'djoser',
+    # 'djoser',
     'rest_framework.authtoken',
     'corsheaders',
     'imagekit',
@@ -146,8 +146,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
-            'rest_framework.authentication.TokenAuthentication',
-            'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -155,10 +155,12 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-DJOSER = {
-    'LOGIN_FIELD': 'email'
-}
+# DJOSER = {
+#     'LOGIN_FIELD': 'email'
+# }
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+# CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 
 AUTH_USER_MODEL = 'user.Account'
+
+CORS_ORIGIN_ALLOW_ALL = True

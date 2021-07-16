@@ -12,6 +12,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import JSONParser, MultiPartParser
 from django_filters.rest_framework import DjangoFilterBackend
+from django_filters import rest_framework as filters
 
 User = get_user_model()
 
@@ -22,7 +23,7 @@ class IsSuperUser(BasePermission):
 
 
 class PetViewSet(viewsets.ModelViewSet):
-    queryset = Pet.objects.all()
+    queryset = Pet.objects.all().order_by('-created_at')
     serializer_class = PetSerializer
     # permission_classes = (IsSuperUser, )
     parser_classes = (JSONParser, MultiPartParser)
@@ -42,7 +43,7 @@ class PetOwnerGroupViewSet(viewsets.ModelViewSet):
 
 
 class CareCategoryViewSet(viewsets.ModelViewSet):
-    queryset = CareCategory.objects.all()
+    queryset = CareCategory.objects.all().order_by('-created_at')
     serializer_class = CareCategorySerializer
     filter_fields = (
         'id',
@@ -55,19 +56,27 @@ class CareCategoryViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsSuperUser, )
 
 
-class PetCareLogViewSet(viewsets.ModelViewSet):
-    queryset = PetCareLog.objects.all()
+class CustomPetCareLogFilter(filters.FilterSet):
+    date_time = filters.DateRangeFilter(field_name='date_time')
+
+    class Meta:
+        model = PetCareLog
+        fields = (
+            'date_time',
+            'integer',
+            'float',
+            'text',
+            'checkbox',
+            'care_category',
+            'memo',
+            'pet',
+        )
+
+
+class PetCareLogViewSet(viewsets.ModelViewSet, filters.FilterSet):
+    queryset = PetCareLog.objects.all().order_by('-date_time')
     serializer_class = PetCareLogSerializer
-    filter_fields = (
-        'date_time',
-        'integer',
-        'float',
-        'text',
-        'checkbox',
-        'care_category',
-        'memo',
-        'pet',
-    )
+    filter_class = CustomPetCareLogFilter
     # permission_classes = (IsSuperUser, )
 
 
