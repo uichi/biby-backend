@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'import_export',
     'rest_framework',
-    # 'djoser',
+    'djoser',
     'rest_framework.authtoken',
     'corsheaders',
     'imagekit',
@@ -155,12 +155,24 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-# DJOSER = {
-#     'LOGIN_FIELD': 'email'
-# }
+DOMAIN = ('localhost:3000')
+SITE_NAME = ('biby')
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': 'reset_password_confirm?uid={uid}&token={token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+}
+
 
 # CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 
 AUTH_USER_MODEL = 'user.Account'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'smtp.daifuku.conoha.io'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'noreply@biby.live'
+EMAIL_HOST_PASSWORD = '#0001Biby'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'noreply@biby.live'
