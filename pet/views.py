@@ -27,7 +27,7 @@ class PetViewSet(viewsets.ModelViewSet):
     serializer_class = PetSerializer
     # permission_classes = (IsSuperUser, )
     parser_classes = (JSONParser, MultiPartParser)
-    filter_fields = ('name',)
+    filter_fields = ('name', 'share_id')
 
     def perform_create(self, serializer):
         pet = serializer.save()

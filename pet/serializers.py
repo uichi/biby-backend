@@ -20,9 +20,16 @@ class PetSerializer(ModelSerializer):
 
 
 class PetOwnerGroupSerializer(ModelSerializer):
+    user_pk = PrimaryKeyRelatedField(
+        queryset=User.objects.all(), source='user', write_only=True
+    )
+    pet_pk = PrimaryKeyRelatedField(
+        queryset=Pet.objects.all(), source='pet'
+    )
+
     class Meta:
         model = PetOwnerGroup
-        fields = ('pet',)
+        fields = ('pet', 'user_pk', 'pet_pk')
         depth = 1
 
 
