@@ -9,3 +9,4 @@ uwsgi_params
 /project/production.py
 /static
 media
+.env

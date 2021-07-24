@@ -10,7 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
+import environ
+from pathlib import Path, PurePath
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,10 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-wum*%p-gy*0zamq88b-tqaxd#z#t(ym9@2-bxw^k&hszc+^m(l'
+# SECRET_KEY = 'django-insecure-wum*%p-gy*0zamq88b-tqaxd#z#t(ym9@2-bxw^k&hszc+^m(l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+
+env = environ.Env()
+env.read_env(str(PurePath.joinpath(BASE_DIR, '.env')))
+SECRET_KEY = env('SECRET_KEY')
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
 
@@ -90,6 +96,20 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'biby',
+#         'USER': 'biby',
+#         'PASSWORD': '#Biby1221',
+#         'HOST': 'biby.cmi32tzfojo6.us-east-2.rds.amazonaws.com',
+#         'PORT': '53000',
+#         'OPTIONS': {
+#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+#         },
+#     }
+# }
+
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
@@ -155,7 +175,7 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-DOMAIN = ('localhost:3000')
+DOMAIN = ('www.diary.biby.live')
 SITE_NAME = ('biby')
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'reset_password_confirm?uid={uid}&token={token}',
