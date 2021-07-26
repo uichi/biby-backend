@@ -21,8 +21,8 @@ class Pet(Model):
     GENDER = (('male', 'オス'), ('female', 'メス'))
     name = CharField(max_length=150, blank=False, null=False)
     image = ProcessedImageField(upload_to='pet_images',
-                                processors=[ResizeToFill(75, 75)],
-                                options={'quality': 60},
+                                processors=[ResizeToFill(100, 100)],
+                                options={'quality': 100},
                                 blank=True,
                                 null=True)
     gender = CharField(choices=GENDER, max_length=16, blank=True, null=True)
