@@ -28,9 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 env.read_env(str(PurePath.joinpath(BASE_DIR, '.env')))
 SECRET_KEY = env('SECRET_KEY')
-DEBUG = env('DEBUG')
+DEBUG = env.get_value('DEBUG', bool)
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = env.get_value('ALLOWED_HOSTS', list)
 
 # Application definition
 
@@ -89,26 +89,15 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if env('ENV') == 'local':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'biby',
-#         'USER': 'biby',
-#         'PASSWORD': '#Biby1221',
-#         'HOST': 'biby.cmi32tzfojo6.us-east-2.rds.amazonaws.com',
-#         'PORT': '53000',
-#         'OPTIONS': {
-#             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-#         },
-#     }
-# }
+else:
+    from .production import *
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -156,11 +145,6 @@ STATIC_ROOT = '/var/biby/static'
 MEDIA_ROOT = BASE_DIR.joinpath('media')
 MEDIA_URL = '/media/'
 
-try:
-    from .production import *
-except:
-    pass
-
 # rest-framework setting
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -175,24 +159,21 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
 }
 
-DOMAIN = ('www.diary.biby.live')
+DOMAIN = (env('DOMAIN'))
 SITE_NAME = ('biby')
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': 'reset_password_confirm?uid={uid}&token={token}',
     'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
 }
 
-
-# CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
-
 AUTH_USER_MODEL = 'user.Account'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'smtp.daifuku.conoha.io'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'noreply@biby.live'
-EMAIL_HOST_PASSWORD = '#0001Biby'
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env.get_value('EMAIL_PORT', int)
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'noreply@biby.live'
+DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
