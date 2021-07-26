@@ -1,1 +1,1 @@
-apt install -y httpd
+apt install -y apache2
