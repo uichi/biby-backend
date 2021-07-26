@@ -1,1 +1,1 @@
-apt install -y httpd
+sudo apt install -y httpd
