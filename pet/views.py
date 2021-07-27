@@ -26,7 +26,6 @@ class PetViewSet(viewsets.ModelViewSet):
     queryset = Pet.objects.all().order_by('-created_at')
     serializer_class = PetSerializer
     # permission_classes = (IsSuperUser, )
-    parser_classes = (JSONParser, MultiPartParser)
     filter_fields = ('name', 'share_id')
 
     def perform_create(self, serializer):
