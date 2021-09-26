@@ -16,6 +16,14 @@ import uuid
 User = get_user_model()
 
 
+# Pet Category
+class PetCategory(Model):
+    name = CharField(max_length=128, blank=False, null=False)
+
+    def __str__(self):
+        return self.name
+
+
 # Pet
 class Pet(Model):
     GENDER = (('male', 'オス'), ('female', 'メス'))
@@ -31,6 +39,7 @@ class Pet(Model):
     # TODO: 読み取り専用にしたい
     share_id = UUIDField(default=uuid.uuid4, editable=False)
     is_heaven = BooleanField(blank=True, null=False, default=False)
+    category = ForeignKey(PetCategory, on_delete=DO_NOTHING, null=False)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 
