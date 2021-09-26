@@ -1,4 +1,10 @@
-from django.db.models import CASCADE, DO_NOTHING, Model
+from django.db.models import BooleanField, \
+    CharField, \
+    DateTimeField, \
+    ForeignKey, \
+    TextField, \
+    BooleanField
+from django.db.models import CASCADE, SET_NULL, Model
 from pet.models import Pet
 from django.contrib.auth import get_user_model
 from imagekit.models import ProcessedImageField
@@ -18,9 +24,8 @@ class Blog(Model):
                                 blank=True,
                                 null=True)
     is_published = BooleanField(blank=True, null=False, default=False)
-    publish_date = DateField(blank=True, null=True)
-    create_user = ForeignKey(User, on_delete=DO_NOTHING, null=False)
-    update_user = ForeignKey(User, on_delete=DO_NOTHING, null=True)
+    publish_datetime = DateTimeField(blank=True, null=True)
+    update_user = ForeignKey(User, on_delete=SET_NULL, null=True)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 
@@ -30,7 +35,7 @@ class Blog(Model):
 
 # Like Blog
 class LikeBlog(Model):
-    user = ForeignKey(User, on_delete=DO_NOTHING, null=False)
+    user = ForeignKey(User, on_delete=SET_NULL, null=True)
     blog = ForeignKey(Blog, on_delete=CASCADE, null=False)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)

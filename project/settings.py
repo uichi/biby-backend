@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'animal_organization',
     'pet',
     'user',
+    'blog',
 ]
 
 MIDDLEWARE = [

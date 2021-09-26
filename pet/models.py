@@ -7,7 +7,7 @@ from django.db.models import BooleanField, \
     IntegerField, \
     TextField, \
     UUIDField
-from django.db.models import CASCADE, DO_NOTHING, Model
+from django.db.models import CASCADE, SET_NULL, Model
 from django.contrib.auth import get_user_model
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
@@ -39,7 +39,7 @@ class Pet(Model):
     # TODO: 読み取り専用にしたい
     share_id = UUIDField(default=uuid.uuid4, editable=False)
     is_heaven = BooleanField(blank=True, null=False, default=False)
-    category = ForeignKey(PetCategory, on_delete=DO_NOTHING, null=False)
+    category = ForeignKey(PetCategory, on_delete=SET_NULL, null=True)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 
@@ -49,7 +49,7 @@ class Pet(Model):
 
 # Pet owner group
 class PetOwnerGroup(Model):
-    user = ForeignKey(User, on_delete=DO_NOTHING, null=False)
+    user = ForeignKey(User, on_delete=CASCADE, null=False)
     pet = ForeignKey(Pet, on_delete=CASCADE, null=False)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
