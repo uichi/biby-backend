@@ -24,7 +24,7 @@ class Blog(Model):
                                 blank=True,
                                 null=True)
     is_published = BooleanField(blank=True, null=False, default=False)
-    publish_datetime = DateTimeField(blank=True, null=True)
+    publish_date_time = DateTimeField(blank=True, null=True)
     create_user = ForeignKey(User, on_delete=SET_NULL, null=True, related_name='create_user')
     update_user = ForeignKey(User, on_delete=SET_NULL, null=True, related_name='update_user')
     likes = ManyToManyField(

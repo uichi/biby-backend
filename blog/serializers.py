@@ -15,7 +15,7 @@ class BlogSerializer(ModelSerializer):
             'content',
             'image',
             'is_published',
-            'publish_datetime',
+            'publish_date_time',
             'update_user',)
 
 
