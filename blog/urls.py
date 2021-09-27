@@ -1,8 +1,12 @@
-from django.urls import path
-from . import views
+from django.urls import include, path
+from rest_framework import routers
+from .views import BlogViewSet, LikeBlogViewSet, BlogCommentViewSet
 
-app_name = 'blog'
+router = routers.DefaultRouter()
+router.register(r'blogs', BlogViewSet)
+router.register(r'like_blog', LikeBlogViewSet)
+router.register(r'blog_comment', BlogCommentViewSet)
 
 urlpatterns = [
-    # path('', views.Top.as_view(), name='top'),
+    path('', include(router.urls)),
 ]

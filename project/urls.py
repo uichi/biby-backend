@@ -15,13 +15,36 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from pet.urls import router as pet_router
+from blog.urls import router as blog_router
+
+
+class DefaultRouter(routers.DefaultRouter):
+    """
+    Extends `DefaultRouter` class to add a method for extending url routes from another router.
+    """
+    def extend(self, app_router):
+        """
+        Extend the routes with url routes of the passed in router.
+
+        Args:
+             app_router: SimpleRouter instance containing route definitions.
+        """
+        self.registry.extend(app_router.registry)
+
+
+router = DefaultRouter()
+router.extend(pet_router)
+router.extend(blog_router)
 
 urlpatterns = [
     path('kawausoadmin/', admin.site.urls),
     path('red_list/', include('red_list.urls')),
     path('', include('animal_organization.urls')),
-    path('api/v1/', include('pet.urls')),
+    path('api/v1/', include(router.urls)),
+    path('api/v1/', include('user.urls')),
     path('api/v1/auth/', include('djoser.urls')),
     path('api/v1/auth/', include('djoser.urls.authtoken')),
-    path('api/v1/', include('user.urls')),
 ]
+

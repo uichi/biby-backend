@@ -4,7 +4,7 @@ from django.db.models import BooleanField, \
     ForeignKey, \
     TextField, \
     BooleanField
-from django.db.models import CASCADE, SET_NULL, Model
+from django.db.models import CASCADE, SET_NULL, Model, ManyToManyField
 from pet.models import Pet
 from django.contrib.auth import get_user_model
 from imagekit.models import ProcessedImageField
@@ -25,7 +25,13 @@ class Blog(Model):
                                 null=True)
     is_published = BooleanField(blank=True, null=False, default=False)
     publish_datetime = DateTimeField(blank=True, null=True)
-    update_user = ForeignKey(User, on_delete=SET_NULL, null=True)
+    create_user = ForeignKey(User, on_delete=SET_NULL, null=True, related_name='create_user')
+    update_user = ForeignKey(User, on_delete=SET_NULL, null=True, related_name='update_user')
+    likes = ManyToManyField(
+        User,
+        through='LikeBlog',
+        blank=True
+    )
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 
