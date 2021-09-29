@@ -35,7 +35,7 @@ class BlogSerializer(ModelSerializer):
 
 class LikeBlogSerializer(ModelSerializer):
     user_pk = PrimaryKeyRelatedField(
-        queryset=User.objects.all(), source='user', write_only=True
+        queryset=User.objects.all(), source='user'
     )
     blog_pk = PrimaryKeyRelatedField(
         queryset=Blog.objects.all(), source='blog'
@@ -43,7 +43,7 @@ class LikeBlogSerializer(ModelSerializer):
 
     class Meta:
         model = LikeBlog
-        fields = ('user_pk', 'blog_pk')
+        fields = ('id', 'user_pk', 'blog_pk')
         depth = 1
 
 

@@ -58,6 +58,9 @@ class PetOwnerGroup(Model):
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 
+    def __str__(self):
+        return self.user
+
 
 # Care Category
 class CareCategory(Model):
@@ -88,3 +91,6 @@ class PetCareLog(Model):
     user = ForeignKey(User, on_delete=CASCADE, null=False)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
+
+    def __str__(self):
+        return self.pet

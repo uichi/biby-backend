@@ -4,7 +4,7 @@ from django.db.models import BooleanField, \
     ForeignKey, \
     TextField, \
     BooleanField
-from django.db.models import CASCADE, SET_NULL, Model, ManyToManyField
+from django.db.models import CASCADE, SET_NULL, Model, ManyToManyField, UniqueConstraint
 from pet.models import Pet
 from django.contrib.auth import get_user_model
 from imagekit.models import ProcessedImageField
@@ -44,6 +44,13 @@ class LikeBlog(Model):
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 
+    constraints = [
+        UniqueConstraint(fields=['user', 'blog'], name='unique_like_blog'),
+    ]
+
+    def __str__(self):
+        return self.user
+
 
 # Blog Comment
 class BlogComment(Model):
@@ -51,3 +58,6 @@ class BlogComment(Model):
     content = TextField(blank=True, null=True)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
+
+    def __str__(self):
+        return self.blog
