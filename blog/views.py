@@ -18,6 +18,7 @@ class BlogViewSet(viewsets.ModelViewSet):
             'title',
             'content',
             'is_published',
+            'create_user',
             'update_user')
 
 

@@ -39,7 +39,7 @@ class Pet(Model):
     # TODO: 読み取り専用にしたい
     share_id = UUIDField(default=uuid.uuid4, editable=False)
     is_heaven = BooleanField(blank=True, null=False, default=False)
-    category = ForeignKey(PetCategory, on_delete=SET_NULL, null=True)
+    category = ForeignKey(PetCategory, on_delete=SET_NULL, blank=True, null=True)
     owners = ManyToManyField(
         User,
         through='PetOwnerGroup',

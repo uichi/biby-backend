@@ -8,7 +8,6 @@ from django.db.models import CASCADE, SET_NULL, Model, ManyToManyField
 from pet.models import Pet
 from django.contrib.auth import get_user_model
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
 
 User = get_user_model()
 
@@ -19,14 +18,13 @@ class Blog(Model):
     title = CharField(max_length=256, blank=True, null=True)
     content = TextField(blank=True, null=True)
     image = ProcessedImageField(upload_to='blog_images',
-                                processors=[ResizeToFill(100, 100)],
                                 options={'quality': 100},
                                 blank=True,
                                 null=True)
     is_published = BooleanField(blank=True, null=False, default=False)
     publish_date_time = DateTimeField(blank=True, null=True)
-    create_user = ForeignKey(User, on_delete=SET_NULL, null=True, related_name='create_user')
-    update_user = ForeignKey(User, on_delete=SET_NULL, null=True, related_name='update_user')
+    create_user = ForeignKey(User, on_delete=SET_NULL, blank=False, null=True, related_name='create_user')
+    update_user = ForeignKey(User, on_delete=SET_NULL, blank=True, null=True, related_name='update_user')
     likes = ManyToManyField(
         User,
         through='LikeBlog',
