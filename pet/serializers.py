@@ -16,6 +16,7 @@ class PetSerializer(ModelSerializer):
             'birthday',
             'welcome_day',
             'share_id',
+            'donate_link',
             'is_heaven')
 
 

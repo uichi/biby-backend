@@ -44,6 +44,7 @@ class Pet(Model):
         User,
         through='PetOwnerGroup',
     )
+    donate_link = CharField(max_length=256, blank=True, null=True)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 
