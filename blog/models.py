@@ -34,7 +34,9 @@ class Blog(Model):
     updated_at = DateTimeField('更新日', auto_now=True)
 
     def __str__(self):
-        return self.title
+        if self.title:
+            return self.title
+        return 'タイトル名なし・blog id : ' + str(self.id)
 
 
 # Like Blog
@@ -49,15 +51,16 @@ class LikeBlog(Model):
     ]
 
     def __str__(self):
-        return self.user
+        return self.user.username + '・blog id : ' + str(self.blog.id)
 
 
 # Blog Comment
 class BlogComment(Model):
     blog = ForeignKey(Blog, on_delete=CASCADE, null=False)
+    # user = ForeignKey(User, on_delete=SET_NULL, null=True)
     content = TextField(blank=True, null=True)
     created_at = DateTimeField('作成日', auto_now_add=True)
     updated_at = DateTimeField('更新日', auto_now=True)
 
     def __str__(self):
-        return self.blog
+        return 'blog id : ' + str(self.blog.id)

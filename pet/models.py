@@ -60,7 +60,7 @@ class PetOwnerGroup(Model):
     updated_at = DateTimeField('更新日', auto_now=True)
 
     def __str__(self):
-        return self.user
+        return self.user.username + '・' + self.pet.name
 
 
 # Care Category
@@ -94,4 +94,4 @@ class PetCareLog(Model):
     updated_at = DateTimeField('更新日', auto_now=True)
 
     def __str__(self):
-        return self.pet
+        return self.pet.name
