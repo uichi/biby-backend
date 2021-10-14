@@ -69,6 +69,7 @@ class CustomPetCareLogFilter(filters.FilterSet):
             'care_category',
             'memo',
             'pet',
+            'user',
         )
 
 
