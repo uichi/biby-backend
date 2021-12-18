@@ -50,7 +50,6 @@ class Account(AbstractBaseUser, PermissionsMixin):
     first_name = CharField(_('first name'), max_length=30, blank=True)
     last_name = CharField(_('last name'), max_length=150, blank=True)
     email = EmailField(_('email address'), unique=True, blank=True)
-    is_active = BooleanField(default=True)
     is_admin = BooleanField(default=False)
 
     is_staff = BooleanField(
@@ -60,7 +59,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     )
     is_active = BooleanField(
         _('active'),
-        default=True,
+        default=False,
         help_text=_(
         'Designates whether this user should be treated as active. '
         'Unselect this instead of deleting accounts.')
