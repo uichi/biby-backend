@@ -6,5 +6,6 @@ from .views import RegisterViewSet
 # router.register(r'users/register', RegisterViewSet)
 
 urlpatterns = [
-    path('users/register', RegisterViewSet.as_view()),
+    # path('users/register', RegisterViewSet.as_view()),
+    path('users/', UserListViewSet.as_view()),
 ]

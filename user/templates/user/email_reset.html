@@ -1,0 +1,31 @@
+{% block subject %}
+bibyメールアドレス再設定のお知らせ
+{% endblock subject%}
+
+{% block text_body %}
+{{name}}様
+
+bibyをご利用いただきありがとうございます。
+
+メールアドレス再設定のリクエストが行われました。
+こちらのリンクからメールアドレスの再設定を行なってください。
+{{ protocol }}://{{ domain }}/{{ url|safe }}
+
+{{ site_name }}運営チーム
+
+{% endblock text_body %}
+
+{% block html_body %}
+<p>{{name}}様</p>
+
+<p>bibyをご利用いただきありがとうございます。</p>
+
+<p>メールアドレス再設定のリクエストが行われました。</p>
+<p>こちらのリンクからメールアドレスの再設定を行なってください。</p>
+<p>{{ protocol }}://{{ domain }}/{{ url|safe }}</p>
+
+<p>本登録を完了することで、アカウントが有効になります。</p>
+
+<p>{{ site_name }}運営チーム</p>
+
+{% endblock html_body %}

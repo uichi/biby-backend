@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import environ
 from pathlib import Path, PurePath
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'corsheaders',
     'imagekit',
     'django_cleanup',
@@ -151,26 +153,24 @@ MEDIA_URL = '/media/'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
 }
 
 DOMAIN = (env('DOMAIN'))
-SITE_NAME = ('biby')
-DJOSER = {
-    'PASSWORD_RESET_CONFIRM_URL': 'reset_password_confirm?uid={uid}&token={token}',
-    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
-}
+SITE_NAME = ('biby',)
 
 AUTH_USER_MODEL = 'user.Account'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = env.get_value('EMAIL_PORT', int)
@@ -185,3 +185,45 @@ AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_REGION_NAME = env('AWS_S3_REGION_NAME')
+
+SIMPLE_JWT = {
+    'AUTH_HEADER_TYPES': ('JWT',),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'BLACKLIST_AFTER_ROTATION': False
+}
+
+DJOSER = {
+    'PASSWORD_RESET_CONFIRM_URL': 'reset_password_confirm?uid={uid}&token={token}',
+    'PASSWORD_RESET_SHOW_EMAIL_NOT_FOUND': True,
+    'SERIALIZERS': {
+        'user_create': 'user.serializers.UserSerializer',
+        'user': 'user.serializers.UserSerializer',
+        'current_user': 'user.serializers.UserSerializer',
+    },
+    'LOGIN_FIELD': 'email',
+    'PERMISSIONS': {
+        'activation': ['rest_framework.permissions.AllowAny'],
+        'user': ['rest_framework.permissions.AllowAny'],
+        'user_list': ['rest_framework.permissions.AllowAny'],
+    },
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL': True,
+    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
+    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
+    'USER_CREATE_PASSWORD_RETYPE': True,
+    'SET_USERNAME_RETYPE': True,
+    'SET_PASSWORD_RETYPE': True,
+    'ACTIVATION_URL': 'activate?uid={uid}&token={token}',
+    'USERNAME_RESET_CONFIRM_URL': 'reset/email/confirm/{uid}/{token}',
+    'PASSWORD_RESET_CONFIRM_URL': 'reset/password/confirm/{uid}/{token}',
+    'EMAIL': {
+        'activation': 'user.email.ActivationEmail',
+        'confirmation': 'user.email.ConfirmationEmail',
+        'password_reset': 'user.email.PasswordResetEmail',
+        'password_changed_confirmation': 'user.email.PasswordChangedConfirmationEmail',
+        'username_changed_confirmation': 'user.email.EmailChangedConfirmationEmail',
+        'username_reset': 'user.email.EmailResetEmail',
+    }
+}

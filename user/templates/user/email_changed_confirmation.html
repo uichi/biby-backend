@@ -1,0 +1,23 @@
+{% block subject %}
+bibyメールアドレス変更完了のお知らせ
+{% endblock subject%}
+
+{% block text_body %}
+{{name}}様
+
+bibyをご利用いただきありがとうございます。
+
+メールアドレスの変更が完了しました。
+
+{{ site_name }}運営チーム
+
+{% endblock text_body %}
+
+{% block html_body %}
+<p>bibyをご利用いただきありがとうございます。</p>
+
+<p>メールアドレスの変更が完了しました。</p>
+
+<p>{{ site_name }}運営チーム</p>
+
+{% endblock html_body %}

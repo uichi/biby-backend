@@ -1,0 +1,31 @@
+{% load i18n %}
+
+{% block subject %}
+{% blocktrans %}{{ site_name }}仮登録のお知らせ{% endblocktrans %}
+{% endblock subject %}
+
+{% block text_body %}
+{% blocktrans %}{{ site_name }}運営チームです。{% endblocktrans %}
+
+{% trans "会員登録手続きを行っていただき、ありがとうございます。" %}
+{% trans "下記URLよりサイトにアクセスの上、引き続き会員登録をお願いいたします。" %}
+{{ protocol }}://{{ domain }}/{{ url|safe }}
+
+{% trans "引き続きよろしくお願いします！" %}
+
+{% blocktrans %}{{ site_name }}チーム{% endblocktrans %}
+{% endblock text_body %}
+
+{% block html_body %}
+
+<p>{% blocktrans %}{{ site_name }}運営チームです。{% endblocktrans %}</p>
+
+<p>{% trans "会員登録手続きを行っていただき、ありがとうございます。" %}</p>
+<p>{% trans "下記URLよりサイトにアクセスの上、引き続き会員登録をお願いいたします。" %}</p>
+<p><a href="{{ protocol }}://{{ domain }}/{{ url|safe }}">{{ protocol }}://{{ domain }}/{{ url|safe }}</a></p>
+
+<p>{% trans "引き続きよろしくお願いします！" %}</p>
+
+<p>{% blocktrans %}{{ site_name }}チーム{% endblocktrans %}</p>
+
+{% endblock html_body %}
